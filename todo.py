@@ -2,7 +2,7 @@ import datetime
 import pickle
 import argparse
 from tabulate import tabulate
-from itertools import count
+import uuid
 
 class Task:
     """Representation of a task
@@ -17,8 +17,7 @@ class Task:
     def __init__(self, name, priority = 1):
         self.name = name
         self.priority = priority
-        iterator = count(start = 1, step = 1)
-        self.unique_id = next(iterator)
+        self.unique_id = uuid.uuid1()
         self.created = datetime.datetime.now()
         self.completed = None
         self.due_date = None
