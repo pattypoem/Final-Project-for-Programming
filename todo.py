@@ -54,53 +54,32 @@ class Tasks:
                 else:
                     data_with_duedate.append(item)
 
-        # sort the task with a due date
-        smallest_date = datetime.datetime.strptime('12/30/2999', '%m/%d/%Y')
-        key_item = 0
-        n = 0
-        l = len(data_with_duedate)
-        while n < l:
-            for item in data_with_duedate:
-                duedate = datetime.datetime.strptime(item.due_date, '%m/%d/%Y')
-                if duedate < smallest_date:
-                    smallest_date = duedate
-                    key_item = item
-
-            time_difference = f"{(datetime.datetime.now() - key_item.created).days}d"
-            data.append([key_item.unique_id, time_difference, key_item.due_date, key_item.priority, key_item.name, key_item.created, key_item.completed])
-
-            for item in data_with_duedate:
-                if datetime.datetime.strptime(item.due_date, '%m/%d/%Y') == smallest_date:
-                    item.due_date = '12/30/2999'
-                    break
-
-            n += 1
+        # sort the data with a due date
+        def sort_date(item):
+            duedate = datetime.datetime.strptime(item.due_date, '%m/%d/%Y')
+            return duedate
         
-        # sort the data without a due date
-        highest_priority = 10
-        key_item2 = 0
-        n2 = 0
-        l2 = len(data_without_duedate)
-        while n2 < l2:
-            for item in data_without_duedate:
-                if item.priority < highest_priority:
-                    highest_priority = item.priority
-                    key_item = item
-            
-            time_difference = f"{(datetime.datetime.now() - key_item.created).days}d"
-            data.append([key_item.unique_id, time_difference, key_item.due_date, key_item.priority, key_item.name, key_item.created, key_item.completed])
-            
-            for item in data_without_duedate:
-                if item.priority == highest_priority:
-                    item.priority = 10
-                    break
+        data_with_duedate.sort(key = sort_date)
 
-            n += 1
+        for item in data_with_duedate:
+            time_difference = f"{(datetime.datetime.now() - item.created).days}d"
+            data.append([item.unique_id, time_difference, item.due_date, item.priority, item.name, item.created, item.completed])
+
+
+        # sort the data without a due date
+        def sort_priority(item):
+            return item.priority
+
+        data_without_duedate.sort(key = sort_priority)
+
+        for item in data_without_duedate:
+            time_difference = f"{(datetime.datetime.now() - item.created).days}d"
+            data.append([item.unique_id, time_difference, item.due_date, item.priority, item.name, item.created, item.completed])
             
-              
+        
         tasks_table = tabulate(data, headers = ['ID', 'Age', 'Due Date', 'Priority', 'Task'])
         print(tasks_table)
-               
+              
 
     def report(self):
         data = []
@@ -112,49 +91,28 @@ class Tasks:
             else:
                 data_with_duedate.append(item)
         
-
-        # sort the task with a due date
-        smallest_date = datetime.datetime.strptime('12/30/2999', '%m/%d/%Y')
-        key_item = 0
-        n = 0
-        l = len(data_with_duedate)
-        while n < l:
-            for item in data_with_duedate:
-                duedate = datetime.datetime.strptime(item.due_date, '%m/%d/%Y')
-                if duedate < smallest_date:
-                    smallest_date = duedate
-                    key_item = item
-
-            time_difference = f"{(datetime.datetime.now() - key_item.created).days}d"
-            data.append([key_item.unique_id, time_difference, key_item.due_date, key_item.priority, key_item.name, key_item.created, key_item.completed])
-
-            for item in data_with_duedate:
-                if datetime.datetime.strptime(item.due_date, '%m/%d/%Y') == smallest_date:
-                    item.due_date = '12/30/2999'
-                    break
-
-            n += 1
+        # sort the data with a due date
+        def sort_date(item):
+            duedate = datetime.datetime.strptime(item.due_date, '%m/%d/%Y')
+            return duedate
         
-        # sort the data without a due date
-        highest_priority = 10
-        key_item2 = 0
-        n2 = 0
-        l2 = len(data_without_duedate)
-        while n2 < l2:
-            for item in data_without_duedate:
-                if item.priority < highest_priority:
-                    highest_priority = item.priority
-                    key_item = item
-            
-            time_difference = f"{(datetime.datetime.now() - key_item.created).days}d"
-            data.append([key_item.unique_id, time_difference, key_item.due_date, key_item.priority, key_item.name, key_item.created, key_item.completed])
-            
-            for item in data_without_duedate:
-                if item.priority == highest_priority:
-                    item.priority = 10
-                    break
+        data_with_duedate.sort(key = sort_date)
 
-            n += 1
+        for item in data_with_duedate:
+            time_difference = f"{(datetime.datetime.now() - item.created).days}d"
+            data.append([item.unique_id, time_difference, item.due_date, item.priority, item.name, item.created, item.completed])
+
+
+        # sort the data without a due date
+        def sort_priority(item):
+            return item.priority
+
+        data_without_duedate.sort(key = sort_priority)
+
+        for item in data_without_duedate:
+            time_difference = f"{(datetime.datetime.now() - item.created).days}d"
+            data.append([item.unique_id, time_difference, item.due_date, item.priority, item.name, item.created, item.completed])
+            
 
         tasks_table = tabulate(data, headers = ['ID', 'Age', 'Due Date', 'Priority', 'Task', 'Created', 'Completed'])
         print(tasks_table)
